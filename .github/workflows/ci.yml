@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Isko manually GitHub UI se run kar sakte hain
 
 permissions:
-  id-token: This is required for requesting the JWT
+  id-token: write
   contents: read
 
 jobs:
