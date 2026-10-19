@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Git Clone
         uses: actions/checkout@v4
+        
+      - name: Debug GitHub OIDC claims
+        uses: github/actions-oidc-debugger@v1
+        with:
+          audience: sts.amazonaws.com
 
       - name: Configure AWS Credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
