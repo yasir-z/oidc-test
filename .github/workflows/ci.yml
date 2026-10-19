@@ -1,7 +1,7 @@
 name: Test AWS OIDC Authentication
 
 on:
-  workflow_dispatch: # Isko manually GitHub UI se run kar sakte hain
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -13,12 +13,13 @@ jobs:
     steps:
       - name: Git Clone
         uses: actions/checkout@v4
-        
+
       - name: Configure AWS Credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: "arn:aws:iam::800770414493:role/gh-role"
           aws-region: us-east-1
+          audience: "sts.amazonaws.com" # Yeh latest v4 mein best practice hai
 
       - name: Verify AWS Access (Check Caller Identity)
         run: |
