@@ -1,26 +1,25 @@
 name: Test AWS OIDC Authentication
-on:
-    workflow_dispatch:
 
-permissions: 
-    id-token: This is required for requesting the JWT
-    contents: read
+on:
+  workflow_dispatch: # Isko manually GitHub UI se run kar sakte hain
+
+permissions:
+  id-token: This is required for requesting the JWT
+  contents: read
 
 jobs:
-    assume_role:
-        runs_on: ubuntu-latest
-        steps:
-            - name: Git Clone
-              uses: actions/checkout@v4
-            
-            - name: configure aws oidc with github
-              uses: aws-actions/configure-aws-credentials@v4
-              with:
-                role-to-assume: "arn:aws:iam::800770414493:role/gh-role"
-                aws-region: us-east-1                
+  assume-role:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Clone
+        uses: actions/checkout@v4
 
-            - name: Verify AWS Access (Check Caller Identity)  
-              run: |
-                aws sts get-caller-identity
+      - name: Configure AWS Credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: "arn:aws:iam::800770414493:role/gh-role"
+          aws-region: us-east-1
 
-
+      - name: Verify AWS Access (Check Caller Identity)
+        run: |
+          aws sts get-caller-identity
